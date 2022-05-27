@@ -40,6 +40,7 @@ struct AppsView: View {
                                     isReturn = true
                                     screen = 3
                                 }
+                                network.logOut()
                             }) {
                                 Text("Log out")
                             }, //: BUTTON

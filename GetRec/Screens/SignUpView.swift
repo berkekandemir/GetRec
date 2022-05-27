@@ -121,8 +121,8 @@ struct SignUpView: View {
                     Button(action: {
                         withAnimation {
                             hapticImpact.impactOccurred()
-                            isReturn = true
-                            screen = 1
+                            isReturn = false
+                            screen = 4
                         }
                     }) {
                         HStack {
