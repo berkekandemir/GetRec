@@ -1,2 +1,2 @@
 # GetRec
-An iOS application get recommendations in different categories.
+An iOS application to get recommendations in different categories.
