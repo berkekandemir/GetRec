@@ -15,6 +15,7 @@ struct AppsListView: View {
     let fontHeavy: Bool
     var hex: String
     let hapticImpact = UIImpactFeedbackGenerator(style: .light)
+    let image: Bool
     @Environment(\.colorScheme) var colorScheme
     
     // MARK: - BODY
@@ -22,15 +23,18 @@ struct AppsListView: View {
         VStack(alignment: .leading, spacing: 8) {
             Spacer()
             HStack {
-                Image(name)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .padding(.horizontal, 10)
+                if (image) {
+                    Image(name)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .padding(.horizontal, 10)
+                }
                 Text(name)
                     .font(fontHeavy ? .title2: .body)
                     .fontWeight(fontHeavy ? .heavy : .regular)
                     .multilineTextAlignment(.leading)
                     .foregroundColor(.black)
+                    .padding(.horizontal, image ? 0 : 10)
                 Spacer()
                 if (chevron) {
                     Image(systemName: "chevron.right")
@@ -40,7 +44,7 @@ struct AppsListView: View {
             } //: HSTACK
             Spacer()
         } //: VSTACK
-        .frame(width: 375, height: 100)
+        .frame(width: 350, height: 100)
         .background(Color(hex: hex))
         .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
         .shadow(color: colorScheme == .dark ? .white : .secondary, radius: 4, x: 0, y: 0)
@@ -51,7 +55,7 @@ struct AppsListView: View {
 // MARK: - PREVIEW
 struct AppsListView_Previews: PreviewProvider {
     static var previews: some View {
-        AppsListView(name: "Games", chevron: true, fontHeavy: false, hex: "007AAF")
+        AppsListView(name: "Games", chevron: true, fontHeavy: false, hex: "007AAF", image: true)
             .previewLayout(.sizeThatFits)
             .padding()
     }

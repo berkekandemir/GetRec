@@ -23,7 +23,7 @@ struct AppsView: View {
                     ScrollView(.vertical, showsIndicators: false) {
                         ForEach(network.apps) { app in
                             NavigationLink(destination: GetRecommendationsView(title: "\(app.name)")) {
-                                AppsListView(name: "\(app.name)", chevron: true, fontHeavy: true, hex: "\(app.color.components(separatedBy: "#")[1])")
+                                AppsListView(name: "\(app.name)", chevron: true, fontHeavy: true, hex: "\(app.color.components(separatedBy: "#")[1])", image: true)
                             }
                             .buttonStyle(PlainButtonStyle())
                         }
@@ -40,7 +40,7 @@ struct AppsView: View {
                                     isReturn = true
                                     screen = 3
                                 }
-                                network.logOut()
+                                network.logout()
                             }) {
                                 Text("Log out")
                             }, //: BUTTON

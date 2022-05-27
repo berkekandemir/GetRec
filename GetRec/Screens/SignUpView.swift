@@ -10,7 +10,7 @@ import Combine
 
 struct SignUpView: View {
     // MARK: - PROPERTY
-    @State private var email: String = ""
+    @State private var username: String = ""
     @State private var password: String = ""
     @State private var passwordRepeat: String = ""
     @State private var passwordMatch: Bool = true
@@ -23,6 +23,7 @@ struct SignUpView: View {
     @FocusState private var focusedField: Field?
     let hapticImpact = UIImpactFeedbackGenerator(style: .light)
     @ObservedObject var textValidator = TextValidator()
+    @EnvironmentObject var network: Network
     
     // MARK: - BODY
     var body: some View {
@@ -37,8 +38,8 @@ struct SignUpView: View {
                     } //: HSTACK
                     .padding(.bottom, 30)
                     TextField(
-                        "E-mail*",
-                        text: $email
+                        "Username*",
+                        text: $username
                     ) //: TEXTFIELD
                     .focused($focusedField, equals: .email)
                     .padding(.horizontal, 15)
@@ -48,8 +49,8 @@ struct SignUpView: View {
                     .frame(width: metrics.size.width * 0.9, height: 50, alignment: .center)
                     .disableAutocorrection(true)
                     .padding(.bottom, 5)
-                    .onReceive(Just(email)) { newValue in
-                        if email == "" || password == "" || passwordRepeat == "" {
+                    .onReceive(Just(username)) { newValue in
+                        if username == "" || password == "" || passwordRepeat == "" {
                             isValid = false
                         } else {
                             isValid = true
@@ -68,7 +69,7 @@ struct SignUpView: View {
                     .disableAutocorrection(true)
                     .padding(.bottom, 5)
                     .onReceive(Just(password)) { newValue in
-                        if email == "" || password == "" || passwordRepeat == "" {
+                        if username == "" || password == "" || passwordRepeat == "" {
                             isValid = false
                         } else if password != passwordRepeat {
                             passwordMatch = false
@@ -90,7 +91,7 @@ struct SignUpView: View {
                     .frame(width: metrics.size.width * 0.9, height: 50, alignment: .center)
                     .disableAutocorrection(true)
                     .onReceive(Just(passwordRepeat)) { newValue in
-                        if email == "" || password == "" || passwordRepeat == "" {
+                        if username == "" || password == "" || passwordRepeat == "" {
                             isValid = false
                         } else if password != passwordRepeat {
                             passwordMatch = false
@@ -119,10 +120,13 @@ struct SignUpView: View {
                     } //: HSTACK
                     .padding(.vertical, 25)
                     Button(action: {
-                        withAnimation {
-                            hapticImpact.impactOccurred()
-                            isReturn = false
-                            screen = 4
+                        network.signup(username: username, password: password, password_confirm: passwordRepeat)
+                        if (network.signup_success) {
+                            withAnimation {
+                                hapticImpact.impactOccurred()
+                                isReturn = false
+                                screen = 4
+                            }
                         }
                     }) {
                         HStack {
@@ -175,6 +179,6 @@ struct SignUpView: View {
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
         SignUpView()
-            
+            .environmentObject(Network())
     }
 }

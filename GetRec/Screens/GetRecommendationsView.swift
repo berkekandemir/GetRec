@@ -24,7 +24,7 @@ struct GetRecommendationsView: View {
     var body: some View {
         GeometryReader { metrics in
             ScrollView(.vertical, showsIndicators: false) {
-                VStack {
+                VStack(alignment: .leading, spacing: 8) {
                     Divider()
                         .padding(.top, 15)
                     GroupBox {
@@ -71,20 +71,22 @@ struct GetRecommendationsView: View {
                     .contentShape(Rectangle())
                     .cornerRadius(8)
                     .padding(.vertical, 30)
+                } //: VSTACK
+                .padding(.horizontal, 20)
+                VStack(alignment: .leading, spacing: 8) {
                     if (results) {
-                        AppsListView(name: "Recommendation Result 1", chevron: false, fontHeavy: false, hex: "007AAF")
+                        AppsListView(name: "Recommendation Result 1", chevron: false, fontHeavy: false, hex: "007AAF", image: false)
                             .animation(Animation.easeOut(duration: 0.6).delay(0.5), value: results)
-                        AppsListView(name: "Recommendation Result 2", chevron: false, fontHeavy: false, hex: "007AAF")
+                        AppsListView(name: "Recommendation Result 2", chevron: false, fontHeavy: false, hex: "007AAF", image: false)
                             .animation(Animation.easeOut(duration: 0.6).delay(0.5), value: results)
-                        AppsListView(name: "Recommendation Result 3", chevron: false, fontHeavy: false, hex: "007AAF")
+                        AppsListView(name: "Recommendation Result 3", chevron: false, fontHeavy: false, hex: "007AAF", image: false)
                             .animation(Animation.easeOut(duration: 0.6).delay(0.5), value: results)
-                        AppsListView(name: "Recommendation Result 4", chevron: false, fontHeavy: false, hex: "007AAF")
+                        AppsListView(name: "Recommendation Result 4", chevron: false, fontHeavy: false, hex: "007AAF", image: false)
                             .animation(Animation.easeOut(duration: 0.6).delay(0.5), value: results)
-                        AppsListView(name: "Recommendation Result 5", chevron: false, fontHeavy: false, hex: "007AAF")
+                        AppsListView(name: "Recommendation Result 5", chevron: false, fontHeavy: false, hex: "007AAF", image: false)
                             .animation(Animation.easeOut(duration: 0.6).delay(0.5), value: results)
                     }
                 } //: VSTACK
-                .padding(.horizontal, 21)
             } //: SCROLL VIEW
             .navigationBarTitle(title, displayMode: .automatic)
         } //: GEOMETRY READER

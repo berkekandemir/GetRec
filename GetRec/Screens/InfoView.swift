@@ -13,13 +13,14 @@ struct InfoView: View {
     let hapticImpact = UIImpactFeedbackGenerator(style: .light)
     @AppStorage("screen") var screen: Int = 6
     @AppStorage("return") var isReturn: Bool = false
+    @EnvironmentObject var network: Network
     
     var body: some View {
         NavigationView {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 20) {
                     GroupBox(label: InfoLabelView(labelText: "Account", labelImage: "person.crop.circle")) {
-                        InfoRowView(name: "E-mail", content: "berke@gmail.com")
+                        InfoRowView(name: "Username", content: "\(network.username)")
                     } //: BOX
                     
                     GroupBox(label: InfoLabelView(labelText: "GetRec", labelImage: "info.circle")) {
@@ -42,8 +43,8 @@ struct InfoView: View {
                     GroupBox (label: InfoLabelView(labelText: "About the App", labelImage: "apps.iphone")) {
                         InfoRowView(name: "Course Code", content: "CENG 318")
                         InfoRowView(name: "Developers", content: "Group 9")
-                        InfoRowView(name: "Website", linkLabel: "Website", linkDestination: "www.berkecankandemir.com")
-                        InfoRowView(name: "Version", content: "0.1.0")
+                        InfoRowView(name: "Website", linkLabel: "Website", linkDestination: "https://get-rec-v2.herokuapp.com")
+                        InfoRowView(name: "Version", content: "0.4")
                         
                     } //: BOX
                 } //: VSTACK
@@ -68,5 +69,6 @@ struct InfoView: View {
 struct InfoView_Previews: PreviewProvider {
     static var previews: some View {
         InfoView()
+            .environmentObject(Network())
     }
 }

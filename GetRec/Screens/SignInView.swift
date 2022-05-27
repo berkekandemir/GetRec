@@ -10,7 +10,7 @@ import Combine
 
 struct SignInView: View {
     // MARK: - PROPERTY
-    @State private var email: String = ""
+    @State private var username: String = ""
     @State private var password: String = ""
     @State private var isValid: Bool = true
     @AppStorage("screen") var screen: Int = 3
@@ -21,6 +21,7 @@ struct SignInView: View {
     @FocusState private var focusedField: Field?
     let hapticImpact = UIImpactFeedbackGenerator(style: .light)
     @ObservedObject var textValidator = TextValidator()
+    @EnvironmentObject var network: Network
     
     // MARK: - BODY
     var body: some View {
@@ -35,8 +36,8 @@ struct SignInView: View {
                     } //: HSTACK
                     .padding(.bottom, 30)
                     TextField(
-                        "E-mail*",
-                        text: $email
+                        "Username*",
+                        text: $username
                     ) //: TEXTFIELD
                     .focused($focusedField, equals: .email)
                     .padding(.horizontal, 15)
@@ -46,8 +47,8 @@ struct SignInView: View {
                     .frame(width: metrics.size.width * 0.9, height: 50, alignment: .center)
                     .disableAutocorrection(true)
                     .padding(.bottom, 5)
-                    .onReceive(Just(email)) { newValue in
-                        if email == "" || password == "" {
+                    .onReceive(Just(username)) { newValue in
+                        if username == "" || password == "" {
                             isValid = false
                         } else {
                             isValid = true
@@ -64,19 +65,32 @@ struct SignInView: View {
                     .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray))
                     .frame(width: metrics.size.width * 0.9, height: 50, alignment: .center)
                     .disableAutocorrection(true)
-                    .padding(.bottom, 20)
                     .onReceive(Just(password)) { newValue in
-                        if email == "" || password == "" {
+                        if (username == "" || password == "") {
                             isValid = false
                         } else {
                             isValid = true
                         }
                     }
+                    if (network.login_failure) {
+                        HStack {
+                            Text("Username or password is incorrect!")
+                                .font(.body)
+                                .foregroundColor(Color("ColorRed"))
+                            .multilineTextAlignment(.leading)
+                            Spacer()
+                        } //: HSTACK
+                        .padding(.top, 5)
+                        .padding(.bottom, 20)
+                    }
                     Button(action: {
-                        withAnimation {
-                            hapticImpact.impactOccurred()
-                            isReturn = false
-                            screen = 4
+                        network.login(username: username, password: password)
+                        if (network.login_success) {
+                            withAnimation {
+                                hapticImpact.impactOccurred()
+                                isReturn = false
+                                screen = 4
+                            }
                         }
                     }) {
                         HStack {
@@ -129,5 +143,6 @@ struct SignInView: View {
 struct SignInView_Previews: PreviewProvider {
     static var previews: some View {
         SignInView()
+            .environmentObject(Network())
     }
 }
