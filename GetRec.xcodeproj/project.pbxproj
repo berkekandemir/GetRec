@@ -9,10 +9,13 @@
 /* Begin PBXBuildFile section */
 		804528292840317E007B2FBD /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804528282840317E007B2FBD /* InfoView.swift */; };
 		805A67DD281F152B0040A98B /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805A67DC281F152B0040A98B /* OnboardingView.swift */; };
-		805A67DF281F15630040A98B /* AppsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805A67DE281F15630040A98B /* AppsView.swift */; };
+		805A67DF281F15630040A98B /* CategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805A67DE281F15630040A98B /* CategoriesView.swift */; };
 		805A67E3281F36A40040A98B /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805A67E2281F36A40040A98B /* SignUpView.swift */; };
 		805A67E5281F36B50040A98B /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805A67E4281F36B50040A98B /* SignInView.swift */; };
 		805A67E9281F36F00040A98B /* GetRecommendationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805A67E8281F36F00040A98B /* GetRecommendationsView.swift */; };
+		80882ACD284237EF00557F53 /* BooksModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80882ACC284237EF00557F53 /* BooksModel.swift */; };
+		80882ACF28423A0800557F53 /* MoviesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80882ACE28423A0800557F53 /* MoviesModel.swift */; };
+		80882AD328423A2400557F53 /* GamesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80882AD228423A2400557F53 /* GamesModel.swift */; };
 		8089D6AA282009E300FDA646 /* UIUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8089D6A9282009E300FDA646 /* UIUtilities.swift */; };
 		8089D6AC2820137000FDA646 /* AppsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8089D6AB2820137000FDA646 /* AppsListView.swift */; };
 		8089D6AE282016A800FDA646 /* InfoLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8089D6AD282016A800FDA646 /* InfoLabelView.swift */; };
@@ -30,10 +33,13 @@
 		804528282840317E007B2FBD /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		805A67DB281F142C0040A98B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		805A67DC281F152B0040A98B /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
-		805A67DE281F15630040A98B /* AppsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsView.swift; sourceTree = "<group>"; };
+		805A67DE281F15630040A98B /* CategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesView.swift; sourceTree = "<group>"; };
 		805A67E2281F36A40040A98B /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		805A67E4281F36B50040A98B /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		805A67E8281F36F00040A98B /* GetRecommendationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRecommendationsView.swift; sourceTree = "<group>"; };
+		80882ACC284237EF00557F53 /* BooksModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksModel.swift; sourceTree = "<group>"; };
+		80882ACE28423A0800557F53 /* MoviesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesModel.swift; sourceTree = "<group>"; };
+		80882AD228423A2400557F53 /* GamesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesModel.swift; sourceTree = "<group>"; };
 		8089D6A9282009E300FDA646 /* UIUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUtilities.swift; sourceTree = "<group>"; };
 		8089D6AB2820137000FDA646 /* AppsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsListView.swift; sourceTree = "<group>"; };
 		8089D6AD282016A800FDA646 /* InfoLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoLabelView.swift; sourceTree = "<group>"; };
@@ -104,7 +110,7 @@
 				808C5964281F0CAD007D18DA /* GetRecApp.swift */,
 				808C5966281F0CAD007D18DA /* ContentView.swift */,
 				805A67DC281F152B0040A98B /* OnboardingView.swift */,
-				805A67DE281F15630040A98B /* AppsView.swift */,
+				805A67DE281F15630040A98B /* CategoriesView.swift */,
 				805A67E2281F36A40040A98B /* SignUpView.swift */,
 				805A67E4281F36B50040A98B /* SignInView.swift */,
 				805A67E8281F36F00040A98B /* GetRecommendationsView.swift */,
@@ -136,6 +142,9 @@
 			children = (
 				80D0A56D283FEBE9003E3BF5 /* AppsModel.swift */,
 				80D0A56F283FEBF6003E3BF5 /* UsersModel.swift */,
+				80882ACC284237EF00557F53 /* BooksModel.swift */,
+				80882ACE28423A0800557F53 /* MoviesModel.swift */,
+				80882AD228423A2400557F53 /* GamesModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -223,16 +232,19 @@
 				805A67DD281F152B0040A98B /* OnboardingView.swift in Sources */,
 				805A67E9281F36F00040A98B /* GetRecommendationsView.swift in Sources */,
 				8089D6AA282009E300FDA646 /* UIUtilities.swift in Sources */,
+				80882ACF28423A0800557F53 /* MoviesModel.swift in Sources */,
 				80D0A572283FED24003E3BF5 /* Network.swift in Sources */,
 				805A67E3281F36A40040A98B /* SignUpView.swift in Sources */,
 				80D0A570283FEBF6003E3BF5 /* UsersModel.swift in Sources */,
 				8089D6AC2820137000FDA646 /* AppsListView.swift in Sources */,
 				80D0A56E283FEBE9003E3BF5 /* AppsModel.swift in Sources */,
-				805A67DF281F15630040A98B /* AppsView.swift in Sources */,
+				80882ACD284237EF00557F53 /* BooksModel.swift in Sources */,
+				805A67DF281F15630040A98B /* CategoriesView.swift in Sources */,
 				8089D6B02820172800FDA646 /* InfoRowView.swift in Sources */,
 				808C5967281F0CAD007D18DA /* ContentView.swift in Sources */,
 				808C5965281F0CAD007D18DA /* GetRecApp.swift in Sources */,
 				8089D6AE282016A800FDA646 /* InfoLabelView.swift in Sources */,
+				80882AD328423A2400557F53 /* GamesModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

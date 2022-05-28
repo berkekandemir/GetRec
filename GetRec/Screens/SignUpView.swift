@@ -11,6 +11,7 @@ import Combine
 struct SignUpView: View {
     // MARK: - PROPERTY
     @State private var username: String = ""
+    @State private var email: String = ""
     @State private var password: String = ""
     @State private var passwordRepeat: String = ""
     @State private var passwordMatch: Bool = true
@@ -24,6 +25,8 @@ struct SignUpView: View {
     let hapticImpact = UIImpactFeedbackGenerator(style: .light)
     @ObservedObject var textValidator = TextValidator()
     @EnvironmentObject var network: Network
+    @AppStorage("signup_success") var signup_success: Bool = false
+    @AppStorage("signup_failure") var signup_failure: Bool = false
     
     // MARK: - BODY
     var body: some View {
@@ -41,6 +44,7 @@ struct SignUpView: View {
                         "Username*",
                         text: $username
                     ) //: TEXTFIELD
+                    .autocapitalization(.none)
                     .focused($focusedField, equals: .email)
                     .padding(.horizontal, 15)
                     .frame(height: 50)
@@ -50,7 +54,27 @@ struct SignUpView: View {
                     .disableAutocorrection(true)
                     .padding(.bottom, 5)
                     .onReceive(Just(username)) { newValue in
-                        if username == "" || password == "" || passwordRepeat == "" {
+                        if username == "" || email == "" || password == "" || passwordRepeat == "" {
+                            isValid = false
+                        } else {
+                            isValid = true
+                        }
+                    }
+                    TextField(
+                        "E-mail*",
+                        text: $email
+                    ) //: TEXTFIELD
+                    .autocapitalization(.none)
+                    .focused($focusedField, equals: .email)
+                    .padding(.horizontal, 15)
+                    .frame(height: 50)
+                    .cornerRadius(8)
+                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray))
+                    .frame(width: metrics.size.width * 0.9, height: 50, alignment: .center)
+                    .disableAutocorrection(true)
+                    .padding(.bottom, 5)
+                    .onReceive(Just(username)) { newValue in
+                        if username == "" || email == "" || password == "" || passwordRepeat == "" {
                             isValid = false
                         } else {
                             isValid = true
@@ -60,6 +84,7 @@ struct SignUpView: View {
                         "Password*",
                         text: $password
                     ) //: SECUREINPUTVIEW
+                    .autocapitalization(.none)
                     .focused($focusedField, equals: .password)
                     .padding(.horizontal, 15)
                     .frame(height: 50)
@@ -69,7 +94,7 @@ struct SignUpView: View {
                     .disableAutocorrection(true)
                     .padding(.bottom, 5)
                     .onReceive(Just(password)) { newValue in
-                        if username == "" || password == "" || passwordRepeat == "" {
+                        if username == "" || email == "" || password == "" || passwordRepeat == "" {
                             isValid = false
                         } else if password != passwordRepeat {
                             passwordMatch = false
@@ -83,6 +108,7 @@ struct SignUpView: View {
                         "Repeat Password*",
                         text: $passwordRepeat
                     ) //: SECUREINPUTVIEW
+                    .autocapitalization(.none)
                     .focused($focusedField, equals: .passwordRepeat)
                     .padding(.horizontal, 15)
                     .frame(height: 50)
@@ -91,7 +117,7 @@ struct SignUpView: View {
                     .frame(width: metrics.size.width * 0.9, height: 50, alignment: .center)
                     .disableAutocorrection(true)
                     .onReceive(Just(passwordRepeat)) { newValue in
-                        if username == "" || password == "" || passwordRepeat == "" {
+                        if username == "" || email == "" || password == "" || passwordRepeat == "" {
                             isValid = false
                         } else if password != passwordRepeat {
                             passwordMatch = false
@@ -110,6 +136,15 @@ struct SignUpView: View {
                             Spacer()
                         } //: HSTACK
                         .padding(.top, 5)
+                    } else if (self.signup_failure) {
+                        HStack {
+                            Text("User already exists!")
+                                .font(.body)
+                                .foregroundColor(Color("ColorRed"))
+                            .multilineTextAlignment(.leading)
+                            Spacer()
+                        } //: HSTACK
+                        .padding(.top, 5)
                     }
                     
                     HStack {
@@ -120,12 +155,23 @@ struct SignUpView: View {
                     } //: HSTACK
                     .padding(.vertical, 25)
                     Button(action: {
-                        network.signup(username: username, password: password, password_confirm: passwordRepeat)
-                        if (network.signup_success) {
-                            withAnimation {
-                                hapticImpact.impactOccurred()
-                                isReturn = false
-                                screen = 4
+                        hapticImpact.impactOccurred()
+                        Task {
+                            do {
+                                try await network.signup(username: username, password: password, password_confirm: passwordRepeat, email: email)
+                                if (self.signup_success) {
+                                    withAnimation {
+                                        isReturn = false
+                                        screen = 4
+                                    }
+                                } else if (self.signup_failure) {
+                                    username = ""
+                                    email = ""
+                                    password = ""
+                                    passwordRepeat = ""
+                                }
+                            } catch {
+                                print("Error", error)
                             }
                         }
                     }) {
@@ -157,7 +203,7 @@ struct SignUpView: View {
                         Spacer()
                     } //: HSTACK
                     .padding(.vertical, 20)
-                    Spacer()
+                    //Spacer()
                 } //: VSTACK
                 .textFieldStyle(PlainTextFieldStyle())
                 .toolbar {

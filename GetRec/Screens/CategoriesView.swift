@@ -1,5 +1,5 @@
 //
-//  HomeView.swift
+//  CategoriesView.swift
 //  GetRec
 //
 //  Created by Berke Can Kandemir on 5/1/22.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AppsView: View {
+struct CategoriesView: View {
     // MARK: - PROPERTIES
     @EnvironmentObject var network: Network
     @AppStorage("info") private var isShowingInfo: Bool = false
@@ -22,8 +22,8 @@ struct AppsView: View {
                 if (network.apps.count != 0) {
                     ScrollView(.vertical, showsIndicators: false) {
                         ForEach(network.apps) { app in
-                            NavigationLink(destination: GetRecommendationsView(title: "\(app.name)")) {
-                                AppsListView(name: "\(app.name)", chevron: true, fontHeavy: true, hex: "\(app.color.components(separatedBy: "#")[1])", image: true)
+                            NavigationLink(destination: GetRecommendationsView(title: app.name, color: app.color.components(separatedBy: "#")[1])) {
+                                AppsListView(name: app.name, chevron: true, hex: app.color.components(separatedBy: "#")[1], image: true, info1Name: "", info1Detail: "", info2Name: "", info2Detail: "", height: 100)
                             }
                             .buttonStyle(PlainButtonStyle())
                         }
@@ -31,7 +31,7 @@ struct AppsView: View {
                             hapticImpact.impactOccurred()
                         })
                     } //: SCROLL VIEW
-                    .navigationBarTitle("Apps", displayMode: .automatic)
+                    .navigationBarTitle("Categories", displayMode: .automatic)
                     .navigationBarItems(
                         leading:
                             Button(action: {
@@ -72,21 +72,10 @@ struct AppsView: View {
     }
 }
 
-struct LoaderView: View {
-    var tintColor: Color = .blue
-    var scaleSize: CGFloat = 1.0
-    
-    var body: some View {
-        ProgressView()
-            .scaleEffect(scaleSize, anchor: .center)
-            .progressViewStyle(CircularProgressViewStyle(tint: tintColor))
-    }
-}
-
 // MARK: - PREVIEW
 struct AppsView_Previews: PreviewProvider {
     static var previews: some View {
-        AppsView()
+        CategoriesView()
             .environmentObject(Network())
     }
 }

@@ -15,6 +15,9 @@ struct SignInView: View {
     @State private var isValid: Bool = true
     @AppStorage("screen") var screen: Int = 3
     @AppStorage("return") var isReturn: Bool = false
+    @AppStorage("login_success") var login_success: Bool = false
+    @AppStorage("login_failure") var login_failure: Bool = false
+    
     private enum Field: Int, CaseIterable {
         case email, password
     }
@@ -39,6 +42,7 @@ struct SignInView: View {
                         "Username*",
                         text: $username
                     ) //: TEXTFIELD
+                    .autocapitalization(.none)
                     .focused($focusedField, equals: .email)
                     .padding(.horizontal, 15)
                     .frame(height: 50)
@@ -58,6 +62,7 @@ struct SignInView: View {
                         "Password*",
                         text: $password
                     ) //: SECUREINPUTVIEW
+                    .autocapitalization(.none)
                     .focused($focusedField, equals: .password)
                     .padding(.horizontal, 15)
                     .frame(height: 50)
@@ -72,7 +77,7 @@ struct SignInView: View {
                             isValid = true
                         }
                     }
-                    if (network.login_failure) {
+                    if (self.login_failure) {
                         HStack {
                             Text("Username or password is incorrect!")
                                 .font(.body)
@@ -80,16 +85,25 @@ struct SignInView: View {
                             .multilineTextAlignment(.leading)
                             Spacer()
                         } //: HSTACK
-                        .padding(.top, 5)
-                        .padding(.bottom, 20)
+                        .padding(.vertical, 5)
                     }
                     Button(action: {
-                        network.login(username: username, password: password)
-                        if (network.login_success) {
-                            withAnimation {
-                                hapticImpact.impactOccurred()
-                                isReturn = false
-                                screen = 4
+                        hapticImpact.impactOccurred()
+                        Task {
+                            do {
+                                try await network.login(username: username, password: password)
+                                print(self.login_success)
+                                if (self.login_success) {
+                                    withAnimation {
+                                        isReturn = false
+                                        screen = 4
+                                    }
+                                } else if (self.login_failure) {
+                                    username = ""
+                                    password = ""
+                                }
+                            } catch {
+                                print("Error", error)
                             }
                         }
                     }) {
@@ -104,6 +118,7 @@ struct SignInView: View {
                     .background((isValid) ? Color("ColorPurple") : Color.gray)
                     .cornerRadius(8)
                     .disabled(!isValid)
+                    .padding(.vertical, 15)
                     HStack {
                         Text("Don't have an account yet?")
                             .font(.body)
@@ -120,7 +135,7 @@ struct SignInView: View {
                         }
                         Spacer()
                     } //: HSTACK
-                    .padding(.vertical, 15)
+                    .padding(.vertical, 5)
                     Spacer()
                 } //: VSTACK
                 .textFieldStyle(PlainTextFieldStyle())

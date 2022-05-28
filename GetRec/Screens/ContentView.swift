@@ -32,7 +32,7 @@ struct ContentView: View {
                 SignInView()
                     .transition(AnyTransition.asymmetric(insertion: .move(edge: !isReturn ? .trailing : .leading), removal: .move(edge: !isReturn ? .leading : .trailing)))
             } else if screen == 4 {
-                AppsView()
+                CategoriesView()
                     .transition(AnyTransition.asymmetric(insertion: .move(edge: !isReturn ? .trailing : .leading), removal: .move(edge: !isReturn ? .leading : .trailing)))
             }
         }
