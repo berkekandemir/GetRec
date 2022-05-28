@@ -133,6 +133,9 @@ class Network: ObservableObject {
     }
     
     func getRec(query: String, type: String) async throws {
+        self.books.removeAll()
+        self.movies.removeAll()
+        self.games.removeAll()
         guard let url = URL(string: "https://get-rec-v2.herokuapp.com/get-rec") else { fatalError("Missing URL") }
 
         var urlRequest = URLRequest(url: url)
