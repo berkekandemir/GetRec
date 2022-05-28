@@ -8,15 +8,6 @@
 import SwiftUI
 
 struct ContentView: View {
-    /*
-     Screens:
-     1 - Onboarding
-     2 - Sign Up
-     3 - Sign In
-     4 - Apps
-     5 - Get Recommendations
-     6 - Info
-     */
     @AppStorage("screen") var screen: Int = 1
     @AppStorage("return") var isReturn: Bool = false
     
