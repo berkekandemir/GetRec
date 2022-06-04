@@ -46,7 +46,7 @@ struct InfoView: View {
                     GroupBox (label: InfoLabelView(labelText: "About the App", labelImage: "apps.iphone")) {
                         InfoRowView(name: "Course Code", content: "CENG 318")
                         InfoRowView(name: "Developers", content: "Group 9")
-                        InfoRowView(name: "Website", linkLabel: "Website", linkDestination: "https://get-rec-v2.herokuapp.com")
+                        InfoRowView(name: "Website", linkLabel: "Website", linkDestination: "get-rec-v2.herokuapp.com")
                         InfoRowView(name: "Version", content: "0.8.2")
                         
                     } //: BOX

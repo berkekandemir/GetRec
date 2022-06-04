@@ -65,9 +65,11 @@ struct GetRecommendationsView: View {
                             ForEach(network.suggestions, id: \.self) { suggestion in
                                 VStack(alignment: .leading, spacing: 8) {
                                     Text(suggestion)
+                                        .padding(.horizontal, 15)
                                     Divider()
                                 }
                                 .onTapGesture {
+                                    hapticImpact.impactOccurred()
                                     searchParam = suggestion
                                     network.suggestions = []
                                 }

@@ -84,11 +84,12 @@ struct AppsListView: View {
             } //: HSTACK
             Spacer()
         } //: VSTACK
-        .frame(width: 375, height: CGFloat(height))
+        .frame(height: CGFloat(height))
         .background(Color(hex: hex))
         .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
         .shadow(color: Color(hex: hex), radius: 4, x: 0, y: 0)
         .padding(5)
+        .padding(.horizontal, 15)
     }
 }
 

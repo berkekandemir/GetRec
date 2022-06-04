@@ -174,6 +174,7 @@ class Network: ObservableObject {
     }
     
     func autoFill(query: String, type: String) throws {
+        self.suggestions.removeAll()
         guard let url = URL(string: "https://get-rec-v2.herokuapp.com/items-starting-with") else { fatalError("Missing URL") }
 
         var urlRequest = URLRequest(url: url)
